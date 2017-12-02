@@ -42,6 +42,7 @@ def part_2(input_):
             for element_from_behind in filter(lambda d: d > element_from_start, sorted_digit_line[::-1]):
                 if element_from_behind % element_from_start == 0:
                     sm += element_from_behind / element_from_start
+                    break
 
     return sm
 
