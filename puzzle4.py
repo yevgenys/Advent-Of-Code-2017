@@ -1,5 +1,5 @@
 def read_input():
-    with open("./puzzle_input", 'r') as f:
+    with open("./puzzle4_input", 'r') as f:
         return f.read()
 
 
@@ -21,23 +21,13 @@ def count_valid_phrases_no_anagrams(input_):
     for line in input_.splitlines():
         visited = []
         for phrase in line.split(" "):
-            if phrase in visited:
+            sorted_phrase = sorted(phrase)
+            if sorted_phrase in visited:
                 break
-            visited.append(phrase)
+            visited.append(sorted_phrase)
         else:
-            if not list_contains_anagram(visited):
-                valid += 1
+            valid += 1
     return valid
-
-
-def list_contains_anagram(lst):
-    for i in xrange(len(lst)):
-        check_element = sorted(lst[i])
-        for j, el in enumerate(lst):
-            if i == j:
-                continue
-            if sorted(el) == check_element:
-                return True
 
 
 if __name__ == '__main__':
