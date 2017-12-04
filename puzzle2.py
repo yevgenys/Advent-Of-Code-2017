@@ -23,14 +23,8 @@ def input():
 def part_1(input_):
     sm = 0
     for line in input_.splitlines():
-        line_max = line_min = 0
-        for digit in map(int, line.split("\t")):
-            if digit > line_max:
-                line_max = digit
-            if digit < line_min or line_min == 0:
-                line_min = digit
-        else:
-            sm += line_max - line_min
+        sorted_list = sorted(map(int, line.split("\t")))
+        sm += sorted_list[-1] - sorted_list[0]
     return sm
 
 
