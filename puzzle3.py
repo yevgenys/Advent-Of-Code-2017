@@ -36,18 +36,18 @@ def build_spiral_matrix(max_value):
                 if node.value > max_value:
                     return matrix
                 next_point = next_move(node.point)
-                node = Node(calc_node_value(next_point, matrix), next_point)
+                node = Node(calc_node_value(next_point, matrix, row_length*4), next_point)
                 matrix.append(node)
         row_length += 1
 
 
-def calc_node_value(start_point, matrix):
+def calc_node_value(start_point, matrix, max_cycles):
     possible_neighbors_coordinates = neighbor_coordinates(start_point)
     neighbor_nodes = []
     for i, search_node in enumerate(matrix[::-1]):
         if search_node.point in possible_neighbors_coordinates:
             neighbor_nodes.append(search_node)
-        if len(neighbor_nodes) >= 4:
+        if len(neighbor_nodes) >= 4 or i >= max_cycles:
             break
     return sum(map(lambda n: n.value, neighbor_nodes))
 
