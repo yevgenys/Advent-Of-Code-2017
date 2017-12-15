@@ -45,19 +45,19 @@ def count_branch(node):
     return sum(map(lambda c: c.weight, node.children)) + node.weight
 
 
-def get_unbalanced_weights(node):
+def get_unbalanced_leaf(node):
     if node.children is None:
         return node.weight
 
     expected_line_weight = -1
     sm = node.weight
     for child in node.children:
-        weight = get_unbalanced_weights(child)
+        weight = get_unbalanced_leaf(child)
         sm += weight
         if expected_line_weight == -1:
             expected_line_weight = weight
         elif expected_line_weight != weight:
-            print("Expected '{}' weight {} != {}; diff = {}".format(child.name, weight, expected_line_weight, expected_line_weight-weight))
+            raise Exception('Answer: {}'.format(child.weight - abs(expected_line_weight-weight)))
     return sm
 
 
@@ -77,9 +77,7 @@ gyxo (61)
 cntj (57)"""
     assert find_top_node_name(test_in.splitlines()) == "tknk"
 
-    print(get_unbalanced_weights(build_tree("tknk", test_in.splitlines())))
-
     actual_input = read_input()
     top_node_name = find_top_node_name(actual_input)
     print(top_node_name)
-    get_unbalanced_weights(build_tree(top_node_name, actual_input))
+    get_unbalanced_leaf(build_tree(top_node_name, actual_input))
