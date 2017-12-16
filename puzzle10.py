@@ -1,6 +1,7 @@
-def knot_hash(in_, lengths, rounds=1):
+def knot_hash(lengths, rounds=1, range_=None):
     cur_pos = skip_size = 0
-    lst = in_[:]
+    lst = range_ if range_ else range(256)
+    lengths += [17, 31, 73, 47, 23]
     for round in xrange(rounds):
         for length in lengths:
             sublist = []
@@ -30,17 +31,13 @@ def create_single_hash_from_sparse_hashs(hex_):
 
 
 if __name__ == '__main__':
-    test_in = (range(5), [3, 4, 1, 5])
-    hash = knot_hash(*test_in)
-    assert hash[0] * hash[1] == 12
+    hash = knot_hash([165, 1, 255, 31, 87, 52, 24, 113, 0, 91, 148, 254, 158, 2, 73, 153])
+    print(hash[0] * hash[1])
 
-    hash = knot_hash(range(256), [165, 1, 255, 31, 87, 52, 24, 113, 0, 91, 148, 254, 158, 2, 73, 153])
-    print(hash[0]*hash[1])
-
-    test1 = knot_hash(range(256), map(ord, "1,2,3") + [17, 31, 73, 47, 23], 64)
+    test1 = knot_hash(map(ord, "1,2,3"), 64)
     test1_res = create_single_hash_from_sparse_hashs(map(hex, sparse_hash(test1)))
     assert test1_res == "3efbe78a8d82f29979031a4aa0b16a9d"
 
-    arr = map(ord, "165,1,255,31,87,52,24,113,0,91,148,254,158,2,73,153") + [17, 31, 73, 47, 23]
-    answ = knot_hash(range(256), arr, 64)
+    arr = map(ord, "165,1,255,31,87,52,24,113,0,91,148,254,158,2,73,153")
+    answ = knot_hash(arr, 64)
     print(create_single_hash_from_sparse_hashs(map(hex, sparse_hash(answ))))
