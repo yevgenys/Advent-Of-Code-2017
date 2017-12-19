@@ -59,24 +59,19 @@ def dance(line, moves, cycles=1):
     parsed_moves = parse_moves(moves)
     seen = []
     for i in xrange(cycles):
-        saw = "".join(line)
-        if saw in seen:
-            return seen[cycles % i]
-        seen.append(saw)
+        if line in seen:
+            return "".join(seen[cycles % i])
+        seen.append(line[:])
         for mv in parsed_moves:
             line = mv(line)
 
     return "".join(line)
 
 
-def main():
-    line = ascii_lowercase[:16]
-    # assert dance([i for i in "abcde"], "s1,x3/4,pe/b".split(",")) == "baedc"
-    # assert dance([i for i in "abcde"], "s1,x3/4,pe/b".split(","), 2) == "ceadb"
-
-    # print(dance([i for i in line], read_input()))
-    print(dance([i for i in line], read_input(), 1000000))
-
-
 if __name__ == '__main__':
-    main()
+    line = ascii_lowercase[:16]
+    assert dance([i for i in "abcde"], "s1,x3/4,pe/b".split(",")) == "baedc"
+    assert dance([i for i in "abcde"], "s1,x3/4,pe/b".split(","), 2) == "ceadb"
+
+    print("Part1: " + dance([i for i in line], read_input()))
+    print("Part2: " + dance([i for i in line], read_input(), 1000000))
