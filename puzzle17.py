@@ -21,5 +21,5 @@ def spin_part2(steps, cycles=50000000):
 
 if __name__ == '__main__':
     res = spin(324, 2017)
-    print "Part1: {}".format(res[1])
+    print "Part1: {}".format(res[res.index(2017) + 1])
     print "Part2: {}".format(spin_part2(324))
